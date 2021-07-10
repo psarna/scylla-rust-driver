@@ -1,0 +1,52 @@
+.scylla-dropdown .scylla-dropdown__button {
+  background: #f4f3f5;
+  border: 1px solid #dde0e7;
+  color: #525055;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.scylla-dropdown .scylla-dropdown__content {
+  width: 100%;
+  padding: 0;
+  border-radius: 5px;
+  background: #f4f3f5;
+  border: 1px solid #dde0e7;
+  z-index: 10;
+  text-align: left;
+}
+
+.scylla-dropdown .scylla-dropdown__content a {
+  padding: 0px;
+}
+
+.f-dropdown::before,
+.f-dropdown::after {
+  display: none !important;
+  border-color: transparent !important;
+}
+
+.scylla-dropdown .scylla-dropdown__content li {
+  padding: 4px 10px;
+  display: block;
+}
+
+.scylla-dropdown.single-version .scylla-dropdown__button {
+  cursor: initial;
+  outline: none;
+}
+
+.scylla-dropdown.single-version .fa {
+  display: none;
+}
+
+.scylla-dropdown.single-version:hover .scylla-dropdown__content {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .scylla-dropdown {
+    margin: 10px 0;
+  }
+}

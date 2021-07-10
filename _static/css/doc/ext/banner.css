@@ -1,0 +1,80 @@
+body {
+  transition: all 400ms ease;
+}
+.promo-banner-wrap {
+  background-image: url("../../../img/top-bar-background.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.promo-banner {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 10;
+  padding: 15px 40px;
+}
+
+.promo-banner__title {
+  margin: 0 18px 3px 0;
+  font-size: 21px;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+}
+
+.promo-banner .promo-banner__button {
+  font-size: 16px;
+  font-weight: bold;
+  color: #3c3255;
+  margin: 4px 0;
+  padding: 6px 10px;
+  background: #ffca22;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+  width: max-content;
+}
+
+.promo-banner__button:hover {
+  opacity: 0.85;
+  text-decoration: none;
+}
+
+.promo-banner__close {
+  padding: 0;
+  margin: 0;
+  position: fixed;
+  right: 20px;
+  top: 0;
+  width: 31px;
+  font-family: "Roboto";
+  font-size: 47px;
+  font-weight: 100;
+  color: #fff;
+  background: none;
+  border: none;
+  transition: color 0.3s ease-in-out;
+  outline: none;
+}
+
+.promo-banner__close:hover,
+.promo-banner__close:focus {
+  opacity: 0.5;
+  background-color: transparent;
+}
+
+@media (min-width: 992px) {
+  .promo-banner {
+    flex-direction: unset;
+  }
+}
