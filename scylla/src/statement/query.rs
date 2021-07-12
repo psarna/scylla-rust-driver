@@ -121,3 +121,80 @@ impl<'a> From<&'a str> for Query {
         Query::new(s.to_owned())
     }
 }
+
+/// `QueryBuilder` makes creating a [`Query`] convenient
+///
+/// # Example:
+/// ```rust
+/// # use scylla::query::{Query, QueryBuilder};
+/// # use scylla::frame::types::Consistency;
+/// let query: Query = QueryBuilder::new("SELECT * FROM keyspace.table")
+///     .consistency(Consistency::One)
+///     .build();
+/// ```
+#[derive(Clone)]
+pub struct QueryBuilder(pub Query);
+
+impl QueryBuilder {
+    /// Creates new QueryBuilder for a [`Query`] with given query text
+    pub fn new(text: impl Into<String>) -> QueryBuilder {
+        QueryBuilder(Query::new(text.into()))
+    }
+
+    /// Disables paging for this CQL query.
+    pub fn disable_paging(mut self) -> Self {
+        self.0.disable_paging();
+        self
+    }
+
+    /// Sets the page size for this CQL query
+    pub fn page_size(mut self, page_size: i32) -> Self {
+        self.0.set_page_size(page_size);
+        self
+    }
+
+    /// Sets the consistency to be used when executing this query.
+    pub fn consistency(mut self, consistency: Consistency) -> Self {
+        self.0.set_consistency(consistency);
+        self
+    }
+
+    /// Builds the result Query, turns `QueryBuilder` into `Query`
+    pub fn build(self) -> Query {
+        self.0
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{Query, QueryBuilder};
+    use crate::frame::types::Consistency;
+
+    #[test]
+    fn default_query_builder() {
+        let query: Query = QueryBuilder::new("query text").build();
+
+        assert_eq!(query.contents, "query text".to_string());
+        assert_eq!(query.page_size, None);
+        assert_eq!(query.consistency, Consistency::Quorum);
+    }
+
+    #[test]
+    fn query_builder_all_options() {
+        let query: Query = QueryBuilder::new("other query text")
+            .disable_paging()
+            .page_size(128)
+            .consistency(Consistency::LocalQuorum)
+            .build();
+
+        assert_eq!(query.contents, "other query text".to_string());
+        assert_eq!(query.page_size, Some(128));
+        assert_eq!(query.consistency, Consistency::LocalQuorum);
+    }
+
+    #[test]
+    #[should_panic]
+    fn query_builder_invalid_page_size() {
+        QueryBuilder::new("bad page size").page_size(-16);
+    }
+}
